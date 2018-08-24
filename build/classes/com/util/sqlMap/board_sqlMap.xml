@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="boardTest">
+	
+	<!-- num의 최댓값 select -->
+	<select id="maxNum" resultClass="Integer" >
+		select nvl(max(num),0) from board
+		<!-- 세미콜론 붙이지 말기. -->
+	</select>
+	
+	<!-- 게시글 추가 -->
+	<insert id="insertData" parameterClass="com.boardTest.BoardForm">
+		insert into board (num, subject, name, email, content, pwd, ipAddr, hitCount, created) values
+		(#num#, #subject#, #name#, #email#, #content#, #pwd#, #ipAddr#, 0, sysdate)
+	</insert>
+	
+	<!-- 반복적인 내용을 처리 -->
+	<sql id="where-list">
+		
+		<isEqual property="searchKey" compareValue="name">
+			where name like '%' || #searchValue# || '%'
+		</isEqual>
+		
+		<isEqual property="searchKey" compareValue="subject">
+			where subject like '%' || #searchValue# || '%'
+		</isEqual>
+		
+		<isEqual property="searchKey" compareValue="content">
+			where content like '%' || #searchValue# || '%'
+		</isEqual>
+		
+	</sql>
+	
+	<sql id="field-list">
+		num,name,subject,hitcount,to_char(created,'YYYY-MM-DD') created
+	</sql>
+	
+	<!-- 데이터의 갯수 -->
+	<select id="dataCount" resultClass="int" parameterClass="map">
+		select nvl(count(num),0) from board
+		where $searchKey$ like '%' || #searchValue# || '%'
+		<!-- <include refid="where-list"/> -->
+	</select>
+	
+	
+	<!-- 전체 데이터 -->
+	<select id="listData" resultClass="com.boardTest.BoardForm" parameterClass="map">
+		select * from (
+		select rownum rnum, data.* from(
+		select <include refid="field-list"/> from board
+		where $searchKey$ like '%' || #searchValue# || '%'
+		<!-- <include refid="where-list"/>-->		
+		order by num desc) data)
+		<![CDATA[ where rnum >= #start# and rnum<=#end# ]]>
+	</select>	
+	
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

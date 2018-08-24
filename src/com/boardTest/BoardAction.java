@@ -123,6 +123,91 @@ public class BoardAction extends DispatchAction{
 	public ActionForward article(ActionMapping mapping, ActionForm form,
 			HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
+		CommonDAO dao = CommonDAOImpl.getInstance();
+		
+		int num = Integer.parseInt(req.getParameter("num"));
+		String pageNum = req.getParameter("pageNum");
+		
+		String searchKey = req.getParameter("searchKey");
+		String searchValue = req.getParameter("searchValue");
+		
+		if(searchKey==null){
+			searchKey = "subject";
+			searchValue = "";
+		}
+		
+		if(req.getMethod().equalsIgnoreCase("GET")){
+			searchValue = URLDecoder.decode(searchValue, "UTF-8");
+		}
+		
+		dao.updateData("boardTest.hitCountUpdate", num);
+		
+		BoardForm dto = (BoardForm)dao.getReadData("boardTest.readData",num);
+		
+		if(dto==null){
+			return mapping.findForward("list");
+		}
+		
+		int lineSu = dto.getContent().split("\n").length;
+		
+		dto.setContent(dto.getContent().replaceAll("\r\n", "<br/>"));
+		
+		//이전글 다음글
+		String preUrl = "";
+		String nextUrl = "";
+		
+		String cp = req.getContextPath();
+		
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("searchKey", searchKey);
+		hMap.put("searchValue", searchValue);
+		hMap.put("num", num);
+		
+		String preSubject = "";
+		BoardForm preDTO = (BoardForm)dao.getReadData("boardTest.preReadData", hMap);
+		
+		if(preDTO!=null){
+			preUrl = cp+"/boardTest.do?method=article&pageNum="+pageNum;
+			preUrl += "&num="+preDTO.getNum();
+			preSubject = preDTO.getSubject();
+		}
+		
+		String nextSubject = "";
+		BoardForm nextDTO = (BoardForm)dao.getReadData("boardTest.nextReadData", hMap);
+		
+		if(nextDTO!=null){
+			nextUrl = cp+"/boardTest.do?method=article&pageNum="+pageNum;
+			nextUrl += "&num="+nextDTO.getNum();
+			nextSubject = nextDTO.getSubject();
+		}
+		
+		String urlList = cp + "/boardTest.do?method=list&pageNum="+pageNum;
+		
+		if(!searchValue.equals("")){
+			searchValue = URLEncoder.encode(searchValue, "UTF-8");
+			urlList += "&searchKey"+searchKey;
+			urlList += "&searchValue"+searchValue;
+		
+			if(!preUrl.equals("")){
+				preUrl = "&searchKey"+searchKey+"&searchValue"+searchValue;
+			}
+			
+			if(!nextUrl.equals("")){
+				nextUrl = "&searchKey"+searchKey+"&searchValue"+searchValue;
+			}
+			
+		}
+		
+		//수정과 삭제에서 사용할 변수
+		String paramArticle = "num="+num+"&pageNum="+pageNum;
+		req.setAttribute("dto", dto);
+		req.setAttribute("preSubject", preSubject);
+		req.setAttribute("preUrl", preUrl);
+		req.setAttribute("nextSubject", nextSubject);
+		req.setAttribute("nextUrl", nextUrl);
+		req.setAttribute("lineSu", lineSu);
+		req.setAttribute("paramArticle", paramArticle);
+		req.setAttribute("urlList", urlList);
 		
 		
 		return mapping.findForward("article");

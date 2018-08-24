@@ -15,19 +15,25 @@
 <link rel="stylesheet" href="<%=cp%>/boardTest/css/list.css" type="text/css"/>
 
 <script type="text/javascript">
-	function searchData(){
+
+	function searchData() {
 		
-		var 
+		var f = document.searchForm;
+		
+		f.action = "<%=cp%>/boardTest.do?method=list";
+		f.submit();
 		
 	}
+
 </script>
+
 
 </head>
 
 <body>
 <div id="bbsList">
 	<div id="bbsList_title">
-	게 시 판
+	게 시 판(iBatis)
 	</div>
 
 	<div id="bbsList_header">
@@ -39,7 +45,7 @@
 				<option value="content">내용</option>
 			</select>
 			<input type="text" name="searchValue" class="textFiled"/>
-			<input type="button" value=" 검 색 " class="btn2" onclick=""/>
+			<input type="button" value=" 검 색 " class="btn2" onclick="searchData();"/>
 		  </form>
 		</div>
 		<div id="rightHeader">
@@ -71,10 +77,15 @@
 		</div>
 		<div id="footer">
 			<p>
-				<a href="#">1</a>
-				<a href="#">2</a>
+				<c:if test="${totalDataCount ne 0 }">
+					${pageIndexList }
+				</c:if>
+				<c:if test="${totalDataCount eq 0 }">
+					등록된 게시물이 없습니다.
+				</c:if>
 			</p>
 		</div>
+
 	</div>
 </div>
 </body>

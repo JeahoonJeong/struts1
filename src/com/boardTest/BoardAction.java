@@ -185,15 +185,15 @@ public class BoardAction extends DispatchAction{
 		
 		if(!searchValue.equals("")){
 			searchValue = URLEncoder.encode(searchValue, "UTF-8");
-			urlList += "&searchKey"+searchKey;
-			urlList += "&searchValue"+searchValue;
+			urlList += "&searchKey="+searchKey;
+			urlList += "&searchValue="+searchValue;
 		
 			if(!preUrl.equals("")){
-				preUrl = "&searchKey"+searchKey+"&searchValue"+searchValue;
+				preUrl += "&searchKey="+searchKey+"&searchValue="+searchValue;
 			}
 			
 			if(!nextUrl.equals("")){
-				nextUrl = "&searchKey"+searchKey+"&searchValue"+searchValue;
+				nextUrl += "&searchKey="+searchKey+"&searchValue="+searchValue;
 			}
 			
 		}

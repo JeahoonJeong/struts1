@@ -40,7 +40,7 @@
 				<dt>등록일</dt>
 				<dd>${dto.created }</dd>
 				<dt>조회수</dt>
-				<dd>${dto.hitcount }</dd>
+				<dd>${dto.hitCount }</dd>
 			</dl>
 		</div>
 		<div id="bbsArticle_content">

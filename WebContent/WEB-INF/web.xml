@@ -17,10 +17,11 @@
 
 <!-- struts 문법을 확인하는 기본 서블릿 -->
 <!-- struts core 에 가면 확인할 수있다. -->
-<!-- Standard Action Servlet Configuration -->
+
 <!-- struts-config.xml 프로젝트 공통 설정 -->
 <!-- struts-config_temp.xml(map file) 개별 설정 -->
 
+<!-- Standard Action Servlet Configuration -->
   <servlet>
     <servlet-name>action</servlet-name>
     <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
@@ -28,7 +29,9 @@
       <param-name>config</param-name>
        <param-value>
                       /WEB-INF/struts-config.xml,
-                      /WEB-INF/struts-config_temp.xml
+                      /WEB-INF/struts-config_test.xml,
+                      /WEB-INF/struts-config_board.xml,
+                      /WEB-INF/struts-config_boardTest.xml
         </param-value>
     </init-param>
     <load-on-startup>2</load-on-startup>

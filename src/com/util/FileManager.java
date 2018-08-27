@@ -106,6 +106,8 @@ public class FileManager {
 	}
 
 	// 실제 파일 삭제
+	// fileName : 서버에 저장된 파일명
+	// path : 서버에 저장된 경로
 	public static void doFileDelete(String fileName, String path)
 			throws Exception {
 		File file = null;

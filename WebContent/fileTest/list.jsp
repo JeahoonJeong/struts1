@@ -33,7 +33,7 @@
 			<td width="50">${dto.listNum }</td>
 			<td width="200">${dto.subject }</td>
 			<td width="200">
-				<a href="<%=cp%>/fileTest.do?method=download&num=${dto.num}&originalFileName=${dto.originalFileName}&saveFileName=${dto.saveFileName}">${dto.originalFileName }</a>
+				<a href="${dto.urlFile }">${dto.originalFileName }</a>
 			<!-- 
 			<form action="<%=cp%>/fileTest.do?method=download" method="post">
 				<input type="hidden" name="originalFileName" value="${dto.originalFileName }"/>

@@ -155,12 +155,17 @@ public class FileTestAction extends DispatchAction{
 	public ActionForward download(ActionMapping mapping, ActionForm form,
 			HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
-		String originalFileName = req.getParameter("originalFileName");
-		String saveFileName = req.getParameter("saveFileName");
+		//String originalFileName = req.getParameter("originalFileName");
+		//String saveFileName = req.getParameter("saveFileName");
 		
 		//FileTestForm f = (FileTestForm)form;
 		//String originalFileName = f.getOriginalFileName();
 		//String saveFileName = f.getSaveFileName();
+		
+		int num = Integer.parseInt(req.getParameter("num"));
+		
+		CommonDAO dao = CommonDAOImpl.getInstance();
+		FileTestForm dto = (FileTestForm)dao.getReadData("fileTest.selectData", num);
 		
 		HttpSession session = req.getSession();
 		
@@ -168,7 +173,7 @@ public class FileTestAction extends DispatchAction{
 		
 		String path = root + File.separator +"pds"+ File.separator+"saveFile";
 		
-		FileManager.doFileDownload(saveFileName, originalFileName, path, resp);
+		FileManager.doFileDownload(dto.getSaveFileName(), dto.getOriginalFileName(), path, resp);
 		
 		return mapping.findForward(null);
 		

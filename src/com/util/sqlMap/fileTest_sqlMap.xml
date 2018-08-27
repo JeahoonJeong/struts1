@@ -34,5 +34,11 @@
 	<delete id="deleteData" parameterClass="int">
 		delete from filetest where num=#num#
 	</delete>
+	
+	<!-- 하나의 데이터 select -->
+	<select id="selectData" resultClass="com.filetest.FileTestForm" parameterClass="int">
+		select num,subject,saveFileName,originalFileName from filetest 
+		where num=#num# 
+	</select>
 
 </sqlMap>

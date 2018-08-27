@@ -113,8 +113,46 @@
 ]]>
 </select>
 
+<!-- 수정 -->
+<update id="updateData" parameterClass="com.boardTest.BoardForm">
+	update board set name=#name#, subject=#subject#, email=#email#, content=#content#,
+	pwd=#pwd# where num=#num#
+</update>
+
+<delete id="deleteData" parameterClass="Integer">
+	delete from board where num=#num#
+</delete>
+
 
 
 
 
 </sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

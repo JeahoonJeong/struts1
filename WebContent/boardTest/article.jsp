@@ -69,9 +69,9 @@
 	<div id="bbsArticle_footer">
 		<div id="leftFooter">
                <input type="button" value=" 수정 " class="btn2" 
-               		onclick="javascript:location.href='<%=cp %>/boardTest.do?method=updated&${paramAticle  }'"/>
+               		onclick="javascript:location.href='<%=cp %>/boardTest.do?method=created&mode=update&${paramArticle  }'"/>
                <input type="button" value=" 삭제 " class="btn2" 
-               		onclick="javascript:location.href='<%=cp %>/boardTest.do?method=deleted&${paramAticle  }'"/>
+               		onclick="javascript:location.href='<%=cp %>/boardTest.do?method=deleted&${paramArticle  }'"/>
 		</div>
 		<div id="rightFooter">
                <input type="button" value=" 리스트 " class="btn2" 
